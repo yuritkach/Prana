@@ -59,6 +59,12 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\infrared\ConsumerIrManager.cs" />
+    <Compile Include="src\infrared\ConsumerIrManagerCompat.cs" />
+    <Compile Include="src\infrared\ConsumerIrManagerXiaomi.cs" />
+    <Compile Include="src\infrared\ir.cs" />
+    <Compile Include="src\infrared\IrCommand.cs" />
+    <Compile Include="src\infrared\IrCommandBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -102,6 +108,7 @@
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
     Other similar extension points exist, see Microsoft.Common.targets.

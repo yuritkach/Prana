@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Threading;
 using Android.App;
-using Android.Hardware;
+using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Prana.src.infrared;
 
 namespace Prana
 {
@@ -18,17 +21,31 @@ namespace Prana
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
+            
+            FindViewById(Resource.Id.offButton).Click += (object sender, EventArgs e) =>
+            {
+                ConsumerIrManager manager = ConsumerIrManager.getSupportConsumerIrManager(this);
 
-            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(toolbar);
+                // Check whether IrEmitter is avaiable on the device.
+                if (!manager.hasIrEmitter())
+                {
+                    Log.Error("AndroidInfraredDemo", "Cannot found IR Emitter on the device");
+                }
 
-            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
-            fab.Click += FabOnClick;
+                // Build IR Command with predefined schemes.
+                
+                    IrCommand necCommand = IrCommand.NEC.BuildNEC(32, 0x00FF00FF);
+                    manager.transmit(necCommand);
+                
+            };
 
-            ConsumerIrManager irManager = (ConsumerIrManager)this.GetSystemService(ConsumerIrService);
-            for (int i=0;i<100000;i++)
-                irManager.Transmit(38400, new int[2] { 0x00, 0xff });
+        
+                
         }
+
+        
+
+
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
