@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.App;
+using Android.Hardware;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -23,6 +24,10 @@ namespace Prana
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
+
+            ConsumerIrManager irManager = (ConsumerIrManager)this.GetSystemService(ConsumerIrService);
+            for (int i=0;i<100000;i++)
+                irManager.Transmit(38400, new int[2] { 0x00, 0xff });
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
